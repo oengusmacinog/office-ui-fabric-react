@@ -29,8 +29,6 @@ export class CheckboxBasicExample extends React.Component<{}, ICheckboxBasicExam
           label='Standard checkbox'
           onChange={ this._onCheckboxChange }
           ariaDescribedBy={ 'descriptionID' }
-          data-ted-rocks={ 'yup' }
-          aria-hello-spain={ 'more yup' }
         />
       </div>
     );
