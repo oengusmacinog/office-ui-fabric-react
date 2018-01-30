@@ -11,6 +11,26 @@ export interface IDropdown {
 
 export interface IDropdownProps extends ISelectableDroppableTextProps<HTMLDivElement> {
   /**
+  * An element type to render as (string or fucntion).
+  */
+  as?: string;
+
+  /**
+  * An attributes to use with as.
+  */
+  with?: any;
+
+  /**
+  * An element type to render as (string or fucntion).
+  */
+  spanAs?: string;
+
+  /**
+  * An attributes to use with as.
+  */
+  spanWith?: any;
+
+  /**
    * Input placeholder text. Displayed until option is selected.
    */
   placeHolder?: string;

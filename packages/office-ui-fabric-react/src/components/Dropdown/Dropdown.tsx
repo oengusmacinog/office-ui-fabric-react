@@ -147,8 +147,16 @@ export class Dropdown extends BaseComponent<IDropdownInternalProps, IDropdownSta
       disabled = isDisabled;
     }
 
+    const ElementType = this.props.as || 'div';
+    // console.log(ElementType);
+    const ElementAttributes = this.props.with;
+
+    const SpanElementType = this.props.spanAs || 'span'
+    // console.log(ElementType);
+    const SpanElementAttributes = this.props.spanWith;
+
     return (
-      <div ref={ this._resolveRef('_root') } className={ css('ms-Dropdown-container') }>
+      <ElementType {...ElementAttributes} ref={ this._resolveRef('_root') } className={ css('ms-Dropdown-container') }>
         { label && (
           <Label className={ css('ms-Dropdown-label') } id={ id + '-label' } htmlFor={ id } ref={ this._resolveRef('_dropdownLabel') } required={ required }>{ label }</Label>
         ) }
@@ -180,7 +188,8 @@ export class Dropdown extends BaseComponent<IDropdownInternalProps, IDropdownSta
           onKeyUp={ this._onDropdownKeyUp }
           onClick={ this._onDropdownClick }
         >
-          <span
+          <SpanElementType
+            {...SpanElementAttributes}
             id={ id + '-option' }
             className={ css(
               'ms-Dropdown-title', styles.title,
@@ -198,7 +207,7 @@ export class Dropdown extends BaseComponent<IDropdownInternalProps, IDropdownSta
               ) :
                 onRenderPlaceHolder(this.props, this._onRenderPlaceHolder)
             }
-          </span>
+          </SpanElementType>
           <span className={ css('ms-Dropdown-caretDownWrapper', styles.caretDownWrapper) }>
             { onRenderCaretDown(this.props, this._onRenderCaretDown) }
           </span>
@@ -214,7 +223,7 @@ export class Dropdown extends BaseComponent<IDropdownInternalProps, IDropdownSta
             { errorMessage }
           </div>
         }
-      </div>
+      </ElementType>
     );
   }
 
