@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IRenderFunction } from '../../Utilities';
+import { ITheme, IStyle } from '../../Styling';
+import { IRenderFunction, IStyleFunction } from '../../Utilities';
 
 export interface INav {
   /**
@@ -80,6 +81,17 @@ export interface INavProps {
    * @deprecated
    **/
   collapsedStateText?: string;
+
+  /**
+   * Theme (provided through customization.)
+   */
+  theme?: ITheme;
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  getStyles?: IStyleFunction<INavProps, INavStyles>;
+
 }
 
 export interface INavLinkGroup {
@@ -200,4 +212,17 @@ export interface INavLink {
    * (Optional) Any additional properties to apply to the rendered links.
    */
   [propertyName: string]: any;
+}
+
+export interface INavStylingProps {
+  theme: ITheme;
+  navnodeHeight?: string;
+  hasExpandButtonLinkLeftPadding?: string;
+  noExpandButtonLinkLeftPadding?: string;
+  linkRightPadding?: string;
+}
+
+export interface INavStyles {
+  root?: IStyle;
+  rootIsOnTop?: IStyle;
 }
