@@ -22,7 +22,7 @@ export interface INavProps {
   /**
    * A collection of link groups to display in the navigation bar
    */
-  groups: INavLinkGroup[] | null;
+  groups?: INavLinkGroup[] | null;
 
   /**
    * Optional class name to allow styling.
@@ -214,7 +214,7 @@ export interface INavLink {
   [propertyName: string]: any;
 }
 
-export interface INavStylingProps {
+export interface INavStyleProps {
   theme: ITheme;
   navnodeHeight?: string;
   hasExpandButtonLinkLeftPadding?: string;

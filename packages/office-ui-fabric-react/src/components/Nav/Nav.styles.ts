@@ -1,7 +1,10 @@
 import { NavBase } from './Nav.base';
-import { INavProps, INavStylingProps, INavStyles } from './Nav.types';
+import { INavProps, INavStyleProps, INavStyles } from './Nav.types';
 
-export function getStyles(props: INavStylingProps): INavStyles {
+export function getStyles(props: INavStyleProps): INavStyles {
+  const { theme } = props;
+  const { palette, fonts, semanticColors } = theme;
+
   return {
     root: {
       overflowY: 'auto',

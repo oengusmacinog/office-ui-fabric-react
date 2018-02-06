@@ -20,7 +20,7 @@ import {
   INavProps,
   INavLinkGroup,
   INavLink,
-  INavStylingProps,
+  INavStyleProps,
   INavStyles
 } from './Nav.types';
 
@@ -41,7 +41,7 @@ export function isRelativeUrl(url: string): boolean {
   return !!url && !/^[a-z0-9+-.]:\/\//i.test(url);
 }
 
-const getClassNames = classNamesFunction<INavStylingProps, INavStyles>();
+const getClassNames = classNamesFunction<INavStyleProps, INavStyles>();
 
 export interface INavState {
   isGroupCollapsed?: { [key: string]: boolean };
