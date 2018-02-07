@@ -225,4 +225,17 @@ export interface INavStyleProps {
 export interface INavStyles {
   root?: IStyle;
   rootIsOnTop?: IStyle;
+  navItems?: IStyle;
+  groupContent?: IStyle;
+  icon?: IStyle;
+  iconLink?: IStyle;
+  chevronButton?: IStyle;
+  chevronIcon?: IStyle;
+  chevronIsExpanded?: IStyle;
+  linkText?: IStyle;
+  compositeLink?: IStyle;
+  link?: IStyle;
+  buttonEntry?: IStyle;
+  groupHeaderFontSize?: IStyle;
+  chevronButtonGroup?: IStyle;
 }
