@@ -99,19 +99,22 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
     }
   }
 
-  private _classNames = getClassNames(
-    this.props.getStyles!,
-    {
-      theme: this.props.theme!,
-      className: this.props.className,
-      isOnTop: this.props.isOnTop
-    }
-  );
+  // private _classNames = getClassNames(
+  //   this.props.getStyles!,
+  //   {
+  //     theme: this.props.theme!,
+  //     className: this.props.className,
+  //     isOnTop: this.props.isOnTop
+  //   }
+  // );
 
   public render(): JSX.Element | null {
     const {
       groups,
-      className
+      className,
+      getStyles,
+      isOnTop,
+      theme
     } = this.props;
 
     if (!groups) {
@@ -128,12 +131,21 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
 
     const groupElements: React.ReactElement<{}>[] = groups.map(this._renderGroup);
 
+    const classNames = getClassNames(
+      getStyles!,
+      {
+        theme: theme!,
+        className,
+        isOnTop
+      }
+    );
+
     return (
       <FocusZone direction={ FocusZoneDirection.vertical }>
         <nav
           role='navigation'
-          // className={ this._classNames.root }
-          className={ css('ms-nav', styles.root, AnimationClassNames.slideRightIn40) }
+          className={ classNames.root }
+        // className={ css('ms-nav', styles.root, AnimationClassNames.slideRightIn40) }
         >
           { groupElements }
         </nav>
@@ -147,8 +159,10 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
 
   @autobind
   private _onRenderLink(link: INavLink) {
-    return (<div className={ styles.linkText }>{ link.name }</div>);
-    // return (<div className={ this._classNames.linkText }>{ link.name }</div>);
+    const { getStyles, theme } = this.props;
+    const classNames = getClassNames(getStyles!, { theme: theme! });
+    // return (<div className={ styles.linkText }>{ link.name }</div>);
+    return (<div className={ classNames.linkText }>{ link.name }</div>);
   }
 
   private _renderNavLink(link: INavLink, linkIndex: number, nestingLevel: number) {
@@ -170,20 +184,34 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
       }
     };
     let {
+      getStyles,
+      theme,
       onRenderLink = this._onRenderLink
     } = this.props;
+
+    const classNames = getClassNames(
+      getStyles!,
+      {
+        theme: theme!,
+        isLinkButton: !!link.onClick,
+        hasExpandButton: this._hasExpandButton,
+        isNotForceAnchor: !link.forceAnchor
+      }
+    );
 
     // Prevent hijacking of the parent window if link.target is defined
     const rel = link.url && link.target && !isRelativeUrl(link.url) ? 'noopener noreferrer' : undefined;
 
+
     return (
       <ActionButton
-        className={ mergeStyles(
-          'ms-Nav-link' + link.onClick && 'ms-Nav-linkButton',
-          styles.link,
-          link.onClick && !link.forceAnchor && styles.buttonEntry,
-          this._hasExpandButton && 'isOnExpanded') as string
-        }
+        className={ classNames.link }
+        // className={ mergeStyles(
+        //   'ms-Nav-link' + link.onClick && 'ms-Nav-linkButton',
+        //   styles.link,
+        //   link.onClick && !link.forceAnchor && styles.buttonEntry,
+        //   this._hasExpandButton && 'isOnExpanded') as string
+        // }
         styles={ buttonStyles }
         href={ link.url || (link.forceAnchor ? 'javascript:' : undefined) }
         iconProps={ { iconName: link.icon || '' } }
@@ -203,40 +231,56 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
     const isRtl: boolean = getRTL();
     const absolutePositionString = `${_indentationSize * nestingLevel + 1}px`;
 
+    const {
+      getStyles,
+      theme,
+    } = this.props;
+
+    const classNames = getClassNames(
+      getStyles!,
+      {
+        theme: theme!,
+        isLinkSelected: this._isLinkSelected(link),
+        isLinkExpanded: !!link.isExpanded,
+        absolutePosition: `${_indentationSize * nestingLevel + 1}px`
+      }
+    );
+
     return (
       <div
         { ...getNativeProps(link, divProperties) }
         key={ link.key || linkIndex }
-        // className={ this._classNames.compositeLink }
-        className={ css(
-          'ms-Nav-compositeLink',
-          styles.compositeLink,
-          !!link.isExpanded && 'is-expanded',
-          isLinkSelected && 'is-selected',
-          !!link.isExpanded && styles.compositeLinkIsExpanded,
-          isLinkSelected && styles.compositeLinkIsSelected
-        ) }
+        className={ classNames.compositeLink }
+      // className={ css(
+      //   'ms-Nav-compositeLink',
+      //   styles.compositeLink,
+      //   !!link.isExpanded && 'is-expanded',
+      //   isLinkSelected && 'is-selected',
+      //   !!link.isExpanded && styles.compositeLinkIsExpanded,
+      //   isLinkSelected && styles.compositeLinkIsSelected
+      // ) }
       >
         { (link.links && link.links.length > 0 ?
           <button
-            className={ mergeStyles(
-              'ms-Nav-chevronButton ms-Nav-chevronButton--link',
-              styles.chevronButton,
-              styles.chevronButtonLink,
-              isRtl && {
-                right: absolutePositionString,
-              },
-              !isRtl && {
-                left: absolutePositionString,
-              }) as string
-            }
+            className={ classNames.chevronButton }
+            // className={ mergeStyles(
+            //   'ms-Nav-chevronButton ms-Nav-chevronButton--link',
+            //   styles.chevronButton,
+            //   styles.chevronButtonLink,
+            //   isRtl && {
+            //     right: absolutePositionString,
+            //   },
+            //   !isRtl && {
+            //     left: absolutePositionString,
+            //   }) as string
+            // }
             onClick={ this._onLinkExpandClicked.bind(this, link) }
             aria-label={ this.props.expandButtonAriaLabel }
             aria-expanded={ link.isExpanded ? 'true' : 'false' }
           >
             <Icon
-              className={ css('ms-Nav-chevron', styles.chevronIcon, link.isExpanded) }
-              // className={ this._classNames.chevronIcon }
+              // className={ css('ms-Nav-chevron', styles.chevronIcon, link.isExpanded) }
+              className={ classNames.chevronIcon }
               iconName='ChevronDown'
             />
           </button> : null
@@ -247,8 +291,12 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
   }
 
   private _renderLink(link: INavLink, linkIndex: number, nestingLevel: number): React.ReactElement<{}> {
+    const { getStyles, theme } = this.props;
+    const classNames = getClassNames(getStyles!, { theme: theme! });
+
     return (
-      <li key={ link.key || linkIndex } role='listitem' className={ css(styles.navItem) }>
+      // <li key={ link.key || linkIndex } role='listitem' className={ css(styles.navItem) }>
+      <li key={ link.key || linkIndex } role='listitem' className={ classNames.navItem }>
         { this._renderCompositeLink(link, linkIndex, nestingLevel) }
         { (link.isExpanded ? this._renderLinks(link.links, ++nestingLevel) : null) }
       </li>
@@ -262,8 +310,12 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
     const linkElements: React.ReactElement<{}>[] = links.map(
       (link: INavLink, linkIndex: number) => this._renderLink(link, linkIndex, nestingLevel));
 
+    const { getStyles, theme } = this.props;
+    const classNames = getClassNames(getStyles!, { theme: theme! });
+
     return (
-      <ul role='list' aria-label={ this.props.ariaLabel } className={ css(styles.navItems) }>
+      // <ul role='list' aria-label={ this.props.ariaLabel } className={ css(styles.navItems) }>
+      <ul role='list' aria-label={ this.props.ariaLabel } className={ classNames.navItems }>
         { linkElements }
       </ul>
     );
@@ -273,36 +325,46 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
   private _renderGroup(group: INavLinkGroup, groupIndex: number): React.ReactElement<{}> {
     const isGroupExpanded: boolean = !this.state.isGroupCollapsed![group.name!];
 
-    console.log(this);
+    const { getStyles, theme } = this.props;
+    const classNames = getClassNames(
+      getStyles!,
+      {
+        theme: theme!,
+        isGroupExpanded: !this.state.isGroupCollapsed![group.name!]
+      }
+    );
 
     return (
       <div
         key={ groupIndex }
-        // className={ this._classNames.group }
-        className={ css(
-          'ms-Nav-group',
-          styles.group,
-          isGroupExpanded && ('is-expanded ' + styles.groupIsExpanded)
-        ) }
+        className={ classNames.group }
+      // className={ css(
+      //   'ms-Nav-group',
+      //   styles.group,
+      //   isGroupExpanded && ('is-expanded ' + styles.groupIsExpanded)
+      // ) }
       >
         { (group.name ?
           <button
-            className={ css('ms-Nav-chevronButton ms-Nav-chevronButton--group ms-Nav-groupHeaderFontSize', styles.chevronButton, styles.chevronButtonIsGroup, styles.groupHeaderFontSize) }
+            // className={ css('ms-Nav-chevronButton ms-Nav-chevronButton--group ms-Nav-groupHeaderFontSize', styles.chevronButton, styles.chevronButtonIsGroup, styles.groupHeaderFontSize) }
+            // className={ css('ms-Nav-chevronButton ms-Nav-chevronButton--group ms-Nav-groupHeaderFontSize', styles.chevronButton, styles.chevronButtonIsGroup, styles.groupHeaderFontSize) }
+            className={ classNames.chevronButton }
             onClick={ this._onGroupHeaderClicked.bind(this, group) }
           >
             <Icon
-              className={ css(
-                'ms-Nav-chevron',
-                styles.chevronIcon,
-                isGroupExpanded && styles.chevronIsExpanded
-              ) }
+              className={ classNames.chevronIcon }
+              // className={ css(
+              //   'ms-Nav-chevron',
+              //   styles.chevronIcon,
+              //   isGroupExpanded && styles.chevronIsExpanded
+              // ) }
               iconName='ChevronDown'
             />
             { group.name }
           </button> : null)
         }
-        <div className={ css('ms-Nav-groupContent', AnimationClassNames.slideDownIn20, styles.groupContent) }>
-          {/* <div className={ this._classNames.groupContent }> */ }
+        {/* <div className={ css('ms-Nav-groupContent', AnimationClassNames.slideDownIn20, styles.groupContent) }> */ }
+        <div className={ classNames.groupContent }>
           { this._renderLinks(group.links, 0 /* nestingLevel */) }
         </div>
       </div>

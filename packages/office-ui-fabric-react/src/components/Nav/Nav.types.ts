@@ -220,8 +220,13 @@ export interface INavStyleProps {
   isOnTop?: boolean;
   isGroupExpanded?: boolean;
   isLinkSelected?: boolean;
-  isExpanded?: boolean;
-  // link?: INavLink;
+  isLinkExpanded?: boolean;
+  absolutePosition?: string;
+  paddingBefore?: number;
+  isRtl?: boolean;
+  isLinkButton?: boolean;
+  hasExpandButton?: boolean;
+  isNotForceAnchor?: boolean;
   navnodeHeight?: string;
   hasExpandButtonLinkLeftPadding?: string;
   noExpandButtonLinkLeftPadding?: string;
@@ -231,6 +236,7 @@ export interface INavStyleProps {
 export interface INavStyles {
   root?: IStyle;
   rootIsOnTop?: IStyle;
+  navItem?: IStyle;
   navItems?: IStyle;
   groupContent?: IStyle;
   icon?: IStyle;
