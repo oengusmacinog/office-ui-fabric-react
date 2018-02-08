@@ -99,8 +99,20 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
     }
   }
 
+  private _classNames = getClassNames(
+    this.props.getStyles!,
+    {
+      theme: this.props.theme!,
+      className: this.props.className,
+      isOnTop: this.props.isOnTop
+    }
+  );
+
   public render(): JSX.Element | null {
-    const { groups, className, isOnTop } = this.props;
+    const {
+      groups,
+      className
+    } = this.props;
 
     if (!groups) {
       return null;
@@ -120,12 +132,7 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
       <FocusZone direction={ FocusZoneDirection.vertical }>
         <nav
           role='navigation'
-          className={ css(
-            'ms-Nav',
-            styles.root,
-            className,
-            isOnTop && css('is-onTop', styles.rootIsOnTop, AnimationClassNames.slideRightIn40)
-          ) }
+          className={ this._classNames.root }
         >
           { groupElements }
         </nav>
@@ -137,8 +144,10 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
     return this.state.selectedKey;
   }
 
+  @autobind
   private _onRenderLink(link: INavLink) {
-    return (<div className={ css('ms-Nav-linkText', styles.linkText) }>{ link.name }</div>);
+    // return (<div className={ styles.linkText }>{ link.name }</div>);
+    return (<div className={ this._classNames.linkText }>{ link.name }</div>);
   }
 
   private _renderNavLink(link: INavLink, linkIndex: number, nestingLevel: number) {
@@ -197,14 +206,15 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
       <div
         { ...getNativeProps(link, divProperties) }
         key={ link.key || linkIndex }
-        className={ css(
-          'ms-Nav-compositeLink',
-          styles.compositeLink,
-          !!link.isExpanded && 'is-expanded',
-          isLinkSelected && 'is-selected',
-          !!link.isExpanded && styles.compositeLinkIsExpanded,
-          isLinkSelected && styles.compositeLinkIsSelected
-        ) }
+        className={ this._classNames.compositeLink }
+      // className={ css(
+      //   'ms-Nav-compositeLink',
+      //   styles.compositeLink,
+      //   !!link.isExpanded && 'is-expanded',
+      //   isLinkSelected && 'is-selected',
+      //   !!link.isExpanded && styles.compositeLinkIsExpanded,
+      //   isLinkSelected && styles.compositeLinkIsSelected
+      // ) }
       >
         { (link.links && link.links.length > 0 ?
           <button
@@ -224,7 +234,8 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
             aria-expanded={ link.isExpanded ? 'true' : 'false' }
           >
             <Icon
-              className={ css('ms-Nav-chevron', styles.chevronIcon, link.isExpanded) }
+              // className={ css('ms-Nav-chevron', styles.chevronIcon, link.isExpanded) }
+              className={ this._classNames.chevronIcon }
               iconName='ChevronDown'
             />
           </button> : null
@@ -261,14 +272,17 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
   private _renderGroup(group: INavLinkGroup, groupIndex: number): React.ReactElement<{}> {
     const isGroupExpanded: boolean = !this.state.isGroupCollapsed![group.name!];
 
+    console.log(this);
+
     return (
       <div
         key={ groupIndex }
-        className={ css(
-          'ms-Nav-group',
-          styles.group,
-          isGroupExpanded && ('is-expanded ' + styles.groupIsExpanded)
-        ) }
+        className={ this._classNames.group }
+      // className={ css(
+      //   'ms-Nav-group',
+      //   styles.group,
+      //   isGroupExpanded && ('is-expanded ' + styles.groupIsExpanded)
+      // ) }
       >
         { (group.name ?
           <button
@@ -286,7 +300,8 @@ export class NavBase extends BaseComponent<INavProps, INavState> implements INav
             { group.name }
           </button> : null)
         }
-        <div className={ css('ms-Nav-groupContent', AnimationClassNames.slideDownIn20, styles.groupContent) }>
+        {/* <div className={ css('ms-Nav-groupContent', AnimationClassNames.slideDownIn20, styles.groupContent) }> */ }
+        <div className={ this._classNames.groupContent }>
           { this._renderLinks(group.links, 0 /* nestingLevel */) }
         </div>
       </div>

@@ -1,21 +1,30 @@
 import { NavBase } from './Nav.base';
 import { INavProps, INavStyleProps, INavStyles } from './Nav.types';
 import { FontWeights, FontSizes } from '../../../../styling/lib/styles/fonts';
+import { AnimationClassNames } from '../../../../styling/lib/classNames/AnimationClassNames';
 
 export function getStyles(props: INavStyleProps): INavStyles {
-  const { theme } = props;
+  const { theme, className, isOnTop, isGroupExpanded, isExpanded, isLinkSelected } = props;
   const { palette, fonts, semanticColors } = theme;
 
   return {
-    root: {
-      overflowY: 'auto',
-      // ADD TO RAWSTYLEBASE?
-      // webkitOverflowScrolling: 'touch',
-      userSelect: 'none'
-    },
-    rootIsOnTop: {
-      position: 'absolute'
-    },
+    root: [
+      'ms-Nav',
+      AnimationClassNames.slideRightIn40,
+      isOnTop && 'is-onTop',
+      // isOnTop && '$rootIsOnTop',
+      isOnTop && { position: 'absolute' },
+      {
+        overflowY: 'auto',
+        // ADD TO RAWSTYLEBASE?
+        // webkitOverflowScrolling: 'touch',
+        userSelect: 'none'
+      },
+      className
+    ],
+    // rootIsOnTop: {
+    //   position: 'absolute'
+    // },
     navItems: {
       listStyleType: 'none',
       selectors: {
@@ -24,15 +33,23 @@ export function getStyles(props: INavStyleProps): INavStyles {
         }
       }
     },
-    groupContent: {
-      display: 'none',
-      marginBottom: '40px',
-      selectors: {
-        '.group.groupIsExpanded &': {
-          display: 'block'
+    group: [
+      'ms-Nav-group',
+      isGroupExpanded && 'is-expanded'
+    ],
+    groupContent: [
+      'ms-Nav-groupContent',
+      AnimationClassNames.slideDownIn20,
+      {
+        display: 'none',
+        marginBottom: '40px',
+      },
+      isGroupExpanded && {
+        selectors: {
+          '$group &': { display: 'block' }
         }
       }
-    },
+    ],
     icon: {
       padding: '0px',
       color: palette.neutralPrimary,
@@ -73,79 +90,90 @@ export function getStyles(props: INavStyleProps): INavStyles {
         }
       }
     },
-    chevronIcon: {
-      position: 'absolute',
-      left: '8px', //needs i18n solution
-      height: props.navnodeHeight,
-      lineHeight: props.navnodeHeight,
-      fontSize: '12px',
-      transition: 'transform .1s linear'
-    },
+    chevronIcon: [
+      'ms-Nav-chevron',
+      {
+        position: 'absolute',
+        left: '8px', //needs i18n solution
+        height: props.navnodeHeight,
+        lineHeight: props.navnodeHeight,
+        fontSize: '12px',
+        transition: 'transform .1s linear'
+      }
+    ],
     chevronIsExpanded: {
       transform: 'rotate(-180deg)'
     },
-    linkText: {
-      margin: '0 4px',
-      overflow: 'hidden',
-      verticalAlign: 'middle',
-      textOverflow: 'ellipsis'
-    },
-    compositeLink: {
-      display: 'block',
-      position: 'relative',
-      color: semanticColors.bodyText,
-      background: semanticColors.bodyBackground,
-      selectors: {
-        '$chevronButton.chevronButtonLink': {
-          display: 'block',
-          // NEED A UTIL FUNCTION TO REMOVE ANYTHING
-          // NaN AND RETURN THE DIGIT THEN PUT THAT
-          // BACK ON
-          // width: props.hasExpandButtonLinkLeftPadding - 2,
-          // height: props.$navnodeHeight - 2,
-          position: 'absolute',
-          top: '1px',
-          zIndex: 1,
-          padding: 0,
-          margin: 0,
-          selectors: {
-            '$chevronIcon': {
-              top: 0
+    linkText: [
+      'ms-Nav-linkText',
+      {
+        margin: '0 4px',
+        overflow: 'hidden',
+        verticalAlign: 'middle',
+        textOverflow: 'ellipsis'
+      }
+    ],
+    compositeLink: [
+      'ms-Nav-compositeLink',
+      // !!isExpanded && 'is-expanded',
+      // isLinkSelected && 'is-selected',
+      {
+        display: 'block',
+        position: 'relative',
+        color: semanticColors.bodyText,
+        background: semanticColors.bodyBackground,
+        selectors: {
+          '$chevronButton.chevronButtonLink': {
+            display: 'block',
+            // NEED A UTIL FUNCTION TO REMOVE ANYTHING
+            // NaN AND RETURN THE DIGIT THEN PUT THAT
+            // BACK ON
+            // width: props.hasExpandButtonLinkLeftPadding - 2,
+            // height: props.$navnodeHeight - 2,
+            position: 'absolute',
+            top: '1px',
+            zIndex: 1,
+            padding: 0,
+            margin: 0,
+            selectors: {
+              '$chevronIcon': {
+                top: 0
+              }
             }
-          }
-        },
-        '&:hover': {
-          selectors: {
-            '& $link, & $chevronButton': {
-              backgroundColor: palette.neutralLighterAlt,
-              color: semanticColors.bodyText
+          },
+          '&:hover': {
+            selectors: {
+              '& $link, & $chevronButton': {
+                backgroundColor: palette.neutralLighterAlt,
+                color: semanticColors.bodyText
+              }
             }
-          }
-        },
-        '&.compositeLinkIsExpanded $chevronIcon': {
-          transform: 'rotate(-180deg)'
-        },
-        '&.compositeLinkIsSelected': {
-          selectors: {
-            '& $link, & $chevronButton': {
-              color: palette.themePrimary,
-              background: palette.neutralLighter,
-              selectors: {
-                '&:after': {
-                  borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
-                  content: '',
-                  position: 'absolute',
-                  top: 0,
-                  right: 0, //needs i18n solution
-                  bottom: 0,
-                  left: 0 //needs i18n solution
+          },
+          '&.compositeLinkIsExpanded $chevronIcon': {
+            transform: 'rotate(-180deg)'
+          },
+          '&.compositeLinkIsSelected': {
+            selectors: {
+              '& $link, & $chevronButton': {
+                color: palette.themePrimary,
+                background: palette.neutralLighter,
+                selectors: {
+                  '&:after': {
+                    borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
+                    content: '',
+                    position: 'absolute',
+                    top: 0,
+                    right: 0, //needs i18n solution
+                    bottom: 0,
+                    left: 0 //needs i18n solution
+                  }
                 }
               }
             }
           }
         }
       }
-    },
+    ],
     link: {
       display: 'block',
       position: 'relative',

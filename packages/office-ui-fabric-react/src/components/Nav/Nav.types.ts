@@ -216,6 +216,12 @@ export interface INavLink {
 
 export interface INavStyleProps {
   theme: ITheme;
+  className?: string;
+  isOnTop?: boolean;
+  isGroupExpanded?: boolean;
+  isLinkSelected?: boolean;
+  isExpanded?: boolean;
+  // link?: INavLink;
   navnodeHeight?: string;
   hasExpandButtonLinkLeftPadding?: string;
   noExpandButtonLinkLeftPadding?: string;
@@ -238,4 +244,5 @@ export interface INavStyles {
   buttonEntry?: IStyle;
   groupHeaderFontSize?: IStyle;
   chevronButtonGroup?: IStyle;
+  group?: IStyle;
 }
