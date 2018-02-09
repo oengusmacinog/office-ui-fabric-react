@@ -187,8 +187,8 @@ export function getStyles(props: INavStyleProps): INavStyles {
         'is-selected', // THIS WORKS
         {
           selectors: {
-            // '& $link': { // THIS DOES NOT
-            '& .ms-Nav-link': { // THIS DOES
+            '& $link': { // THIS DOES NOT
+              // '& .ms-Nav-link': { // THIS DOES
               color: palette.themePrimary,
               background: palette.neutralLighter,
               // selectors: {
@@ -205,7 +205,7 @@ export function getStyles(props: INavStyleProps): INavStyles {
             },
             '& .ms-Nav-link:after': {
               borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
-              content: '',
+              content: '""',
               position: 'absolute',
               top: 0,
               right: 0, //needs i18n solution
