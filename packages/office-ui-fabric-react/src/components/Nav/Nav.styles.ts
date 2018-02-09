@@ -40,11 +40,34 @@ export function getStyles(props: INavStyleProps): INavStyles {
     // rootIsOnTop: {
     //   position: 'absolute'
     // },
+    link: [
+      'ms-Nav-link',
+      isLinkButton && 'ms-Nav-linkButton',
+      hasExpandButton && 'isOnExpanded', // works
+      {
+        display: 'block',     // all dis works
+        position: 'relative',
+        height: navnodeHeight,
+        width: '100%',
+        lineHeight: navnodeHeight,
+        textDecoration: 'none',
+        cursor: 'pointer',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden'
+      },
+      // isLinkButton && isNotForceAnchor && [
+      //   'ms-Nav-link--buttonEntry',
+      //   {
+      //     color: palette.themePrimary
+      //   }
+      // ]
+    ],
     navItem: {},
     navItems: {
       listStyleType: 'none',
       selectors: {
-        '&, & > $navItem': {
+        '&, & > $navItem': { //WORKING
           padding: 0
         }
       }
@@ -150,34 +173,48 @@ export function getStyles(props: INavStyleProps): INavStyles {
     ],
     compositeLink: [
       'ms-Nav-compositeLink',
-      isLinkExpanded && 'is-expanded',
-      isLinkExpanded && {
-        selectors: {
-          '& $chevronIcon': {
-            transform: 'rotate(-180deg)'
-          },
-        }
-      },
-      isLinkSelected && 'is-selected',
-      isLinkSelected && {
-        selectors: {
-          '& $link, & $chevronButton': {
-            color: palette.themePrimary,
-            background: palette.neutralLighter,
-            selectors: {
-              '&:after': {
-                borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
-                content: '',
-                position: 'absolute',
-                top: 0,
-                right: 0, //needs i18n solution
-                bottom: 0,
-                left: 0 //needs i18n solution
-              }
+      isLinkExpanded && [
+        'is-expanded', //WORKS
+        {
+          selectors: {
+            '& $chevronIcon': { //THIS WORKS but not as $link
+              transform: 'rotate(-180deg)'
             }
           }
         }
-      },
+      ],
+      isLinkSelected && [
+        'is-selected', // THIS WORKS
+        {
+          selectors: {
+            // '& $link': { // THIS DOES NOT
+            '& .ms-Nav-link': { // THIS DOES
+              color: palette.themePrimary,
+              background: palette.neutralLighter,
+              // selectors: {
+              //   '&:after': {
+              //     borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
+              //     content: '',
+              //     position: 'absolute',
+              //     top: 0,
+              //     right: 0, //needs i18n solution
+              //     bottom: 0,
+              //     left: 0 //needs i18n solution
+              //   }
+              // }
+            },
+            '& .ms-Nav-link:after': {
+              borderLeft: `2px, solid, ${palette.themePrimary}`, //needs i18n solution
+              content: '',
+              position: 'absolute',
+              top: 0,
+              right: 0, //needs i18n solution
+              bottom: 0,
+              left: 0 //needs i18n solution
+            }
+          }
+        }
+      ],
       {
         display: 'block',
         position: 'relative',
@@ -235,29 +272,7 @@ export function getStyles(props: INavStyleProps): INavStyles {
         }
       }
     ],
-    link: [
-      'ms-Nav-link',
-      isLinkButton && 'ms-Nav-linkButton',
-      hasExpandButton && 'isOnExpanded',
-      {
-        display: 'block',
-        position: 'relative',
-        height: navnodeHeight,
-        width: '100%',
-        lineHeight: navnodeHeight,
-        textDecoration: 'none',
-        cursor: 'pointer',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden'
-      },
-      isLinkButton && isNotForceAnchor && [
-        'ms-Nav-link--buttonEntry',
-        {
-          color: palette.themePrimary
-        }
-      ]
-    ],
+
     // buttonEntry: {
     //   color: palette.themePrimary
     // },
