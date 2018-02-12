@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { IRenderFunction } from '../../Utilities';
+import { ITheme, IStyle } from '../../Styling';
+import { IRenderFunction, IStyleFunction } from '../../Utilities';
 
 export interface INav {
   /**
@@ -21,7 +22,7 @@ export interface INavProps {
   /**
    * A collection of link groups to display in the navigation bar
    */
-  groups: INavLinkGroup[] | null;
+  groups?: INavLinkGroup[] | null;
 
   /**
    * Optional class name to allow styling.
@@ -80,6 +81,17 @@ export interface INavProps {
    * @deprecated
    **/
   collapsedStateText?: string;
+
+  /**
+   * Theme (provided through customization.)
+   */
+  theme?: ITheme;
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  getStyles?: IStyleFunction<INavProps, INavStyles>;
+
 }
 
 export interface INavLinkGroup {
@@ -200,4 +212,43 @@ export interface INavLink {
    * (Optional) Any additional properties to apply to the rendered links.
    */
   [propertyName: string]: any;
+}
+
+export interface INavStyleProps {
+  theme: ITheme;
+  className?: string;
+  isOnTop?: boolean;
+  isGroupExpanded?: boolean;
+  isLinkSelected?: boolean;
+  isLinkExpanded?: boolean;
+  absolutePosition?: string;
+  paddingBefore?: number;
+  isRtl?: boolean;
+  isLinkButton?: boolean;
+  hasExpandButton?: boolean;
+  isNotForceAnchor?: boolean;
+  navnodeHeight?: string;
+  hasExpandButtonLinkLeftPadding?: string;
+  noExpandButtonLinkLeftPadding?: string;
+  linkRightPadding?: string;
+}
+
+export interface INavStyles {
+  root?: IStyle;
+  rootIsOnTop?: IStyle;
+  navItem?: IStyle;
+  navItems?: IStyle;
+  groupContent?: IStyle;
+  icon?: IStyle;
+  iconLink?: IStyle;
+  chevronButton?: IStyle;
+  chevronIcon?: IStyle;
+  chevronIsExpanded?: IStyle;
+  linkText?: IStyle;
+  compositeLink?: IStyle;
+  link?: IStyle;
+  buttonEntry?: IStyle;
+  groupHeaderFontSize?: IStyle;
+  chevronButtonGroup?: IStyle;
+  group?: IStyle;
 }
