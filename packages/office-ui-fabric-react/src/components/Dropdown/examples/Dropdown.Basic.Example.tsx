@@ -24,6 +24,16 @@ export class DropdownBasicExample extends BaseComponent<{}, {
     return (
       <div className='docs-DropdownExample'>
         <Dropdown
+          as='aside'
+          with={ {
+            'data-order': 12,
+            'data-title': 'ted'
+          } }
+          spanAs='article'
+          spanWith={ {
+            'data-whatever': 'boom',
+            'tis-illegal': 'to do this'
+          } }
           placeHolder='Select an Option'
           label='Basic uncontrolled example:'
           id='Basicdrop1'
