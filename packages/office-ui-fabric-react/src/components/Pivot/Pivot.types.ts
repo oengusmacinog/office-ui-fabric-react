@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Pivot, IPivotState } from './Pivot';
+import { Pivot } from './Pivot';
 import { PivotItem } from './PivotItem';
 import { IComponentAs } from '../../Utilities';
 
@@ -21,7 +21,7 @@ export interface IPivotProps extends React.Props<Pivot> {
   /**
    * Render component as another component or HTML element
    */
-  as?: string | IComponentAs<IPivotProps, IPivotState>;
+  as?: string | IComponentAs<IPivotProps>;
 
   /**
    * Render component element with these attributes
