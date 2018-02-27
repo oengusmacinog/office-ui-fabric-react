@@ -1,17 +1,39 @@
 import * as React from 'react';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
-import {
-  PivotItem,
-  IPivotItemProps,
-  Pivot
-} from 'office-ui-fabric-react/lib/Pivot';
+// import {
+//   PivotItem,
+//   IPivotItemProps,
+//   Pivot
+// } from 'office-ui-fabric-react/lib/Pivot';
+import { Pivot, IPivotState } from '../Pivot';
+import { PivotItem } from '../PivotItem';
+import { IPivotProps } from '../Pivot.types';
+import { IPivotItemProps } from '../PivotItem.types';
+import { BaseComponent } from '../../../Utilities';
 
+export class MyCustomPivot extends BaseComponent<IPivotProps, IPivotState> {
+  public render() {
+    const atts = this.props.with;
+    return (
+      // @todo fix props passing
+      <nav { ...atts }>
+        <p>Hello Ted!</p>
+      </nav>
+    );
+  }
+}
 export class PivotIconCountExample extends React.Component<any, any> {
   public render() {
     return (
       <div>
-        <Pivot>
+        <Pivot
+          as={ MyCustomPivot }
+          with={ {
+            'data-whatever': 'boom',
+            'tis-illegal': 'to do this'
+          } }
+        >
           <PivotItem linkText='My Files' itemCount={ 42 } itemIcon='Emoji2'>
             <Label>Pivot #1</Label>
           </PivotItem>

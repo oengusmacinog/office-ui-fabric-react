@@ -1,7 +1,11 @@
 import * as React from 'react';
 
-import { Pivot } from './Pivot';
+import { Pivot, IPivotState } from './Pivot';
 import { PivotItem } from './PivotItem';
+import { IComponentAs } from '../../Utilities';
+
+
+// export type IComponentAsTest<T> = React.ComponentClass<T>;
 
 export interface IPivot {
 
@@ -13,6 +17,16 @@ export interface IPivotProps extends React.Props<Pivot> {
    * the public methods and properties of the component.
    */
   componentRef?: (component: IPivot) => void;
+
+  /**
+   * Render component as another component or HTML element
+   */
+  as?: string | IComponentAs<IPivotProps, IPivotState>;
+
+  /**
+   * Render component element with these attributes
+   */
+  with?: any;
 
   /**
    * The index of the pivot item initially selected.
