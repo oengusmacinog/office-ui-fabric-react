@@ -93,20 +93,13 @@ export class Pivot extends BaseComponent<IPivotProps, IPivotState> {
   }
 
   public render() {
-    // const ElementType = this.props.as || 'div';
-    // console.log(Pivot);
-    // const ElementType = getElementType<IPivotProps>(Pivot, this.props, 'div');
     const ElementType = getElementType<IPivotProps>(this.props.as, 'div');
-    // const ElementAttributes = this.props.with;
     const ElementAttributes = getElementAttributes<IPivotProps>(this.props.as, this.props)
     return (
       <ElementType { ...ElementAttributes }>
         { this._renderPivotLinks() }
         { this._renderPivotItem() }
       </ElementType>
-      // <span>
-      //   <ElementType />
-      // </span>
     );
   }
 
@@ -313,41 +306,9 @@ export function getElementAttributes<P extends IBaseProps>(
   props: P
 ): object | undefined {
 
-  // console.log(typeof as);
-
-  // if (as === undefined || typeof as === 'string') {
-  //   return props.with;
-  // }
-
   if (typeof as === 'function') {
     return props;
   }
 
   return props.with;
 }
-
-// export function getElementType<P extends IBaseProps>(
-//   Component: React.ComponentClass,
-//   props: P,
-//   defaultElement?: string
-// ): IComponentAs<P> | string {
-//   const { defaultProps = {} } = Component;
-//   // const { as } = props;
-
-//   if (props.as) return props.as;
-
-//   if (defaultElement) {
-//     return defaultElement;
-//   }
-
-//   // ----------------------------------------
-//   // infer anchor links
-
-//   // if (props.href) return 'a'
-
-//   // ----------------------------------------
-//   // use defaultProp or 'div'
-
-//   // return defaultProps.as || 'div'
-//   return 'div';
-// }
