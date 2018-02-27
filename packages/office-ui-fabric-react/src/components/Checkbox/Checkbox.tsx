@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {
   BaseComponent,
+  buttonProperties,
   autobind,
   getId,
-  memoize
+  memoize,
+  getNativeProps
 } from '../../Utilities';
 import { Icon } from '../../Icon';
 import {
@@ -100,8 +102,14 @@ export class Checkbox extends BaseComponent<ICheckboxProps, ICheckboxState> impl
         className
       );
 
+    const nativeProps = getNativeProps(
+      this.props,
+      buttonProperties
+    );
+
     return (
       <button
+        { ...nativeProps }
         { ...inputProps }
         { ...(checked !== undefined && { checked }) }
         { ...(defaultChecked !== undefined && { defaultChecked }) }
