@@ -14,10 +14,8 @@ import { BaseComponent } from '../../../Utilities';
 
 export class MyCustomPivot extends BaseComponent<IPivotProps, IPivotState> {
   public render() {
-    const atts = this.props.with;
     return (
-      // @todo fix props passing
-      <nav { ...atts }>
+      <nav { ...this.props.with }>
         <p>Hello Ted!</p>
       </nav>
     );

@@ -18,6 +18,8 @@ import { PivotLinkSize } from './Pivot.types';
 import { Icon } from '../../Icon';
 import * as stylesImport from './Pivot.scss';
 const styles: any = stylesImport;
+//remove for prod
+import { getElementType, getElementAttributes } from './PivotItem';
 
 /**
  *  Usage:
@@ -285,30 +287,4 @@ export class Pivot extends BaseComponent<IPivotProps, IPivotState> {
       }
     }
   }
-}
-
-export function getElementType<P>(
-  as: string | IComponentAs<P> | undefined,
-  defaultElement?: string
-): IComponentAs<P> | string {
-
-  if (as) return as;
-
-  if (defaultElement) {
-    return defaultElement;
-  }
-
-  return 'div';
-}
-
-export function getElementAttributes<P extends IBaseProps>(
-  as: string | IComponentAs<P> | undefined,
-  props: P
-): object | undefined {
-
-  if (typeof as === 'function') {
-    return props;
-  }
-
-  return props.with;
 }
