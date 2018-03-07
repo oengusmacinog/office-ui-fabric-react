@@ -17,6 +17,12 @@ export const AppDefinition: IAppDefinition = {
     {
       links: [
         {
+          component: require<any>('../components/XComponent/XComponentPage').XComponentPage,
+          key: 'XComponent',
+          name: 'XComponent',
+          url: '#/examples/xcomponent'
+        },
+        {
           component: require<any>('../components/ActivityItem/ActivityItemPage').ActivityItemPage,
           key: 'ActivityItem',
           name: 'ActivityItem',
