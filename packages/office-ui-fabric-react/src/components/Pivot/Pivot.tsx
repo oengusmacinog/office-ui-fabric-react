@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {
+  IBaseProps,
   BaseComponent,
   KeyCodes,
   css,
   getId,
-  autobind
+  autobind,
+  IComponentAs
 } from '../../Utilities';
 import { CommandButton } from '../../Button';
 import { IPivotProps } from './Pivot.types';
@@ -16,6 +18,8 @@ import { PivotLinkSize } from './Pivot.types';
 import { Icon } from '../../Icon';
 import * as stylesImport from './Pivot.scss';
 const styles: any = stylesImport;
+//remove for prod
+import { getElementType, getElementAttributes } from './PivotItem';
 
 /**
  *  Usage:
@@ -91,11 +95,13 @@ export class Pivot extends BaseComponent<IPivotProps, IPivotState> {
   }
 
   public render() {
+    const ElementType = getElementType<IPivotProps>(this.props.as, 'div');
+    const ElementAttributes = getElementAttributes<IPivotProps>(this.props.as, this.props)
     return (
-      <div>
+      <ElementType { ...ElementAttributes }>
         { this._renderPivotLinks() }
         { this._renderPivotItem() }
-      </div>
+      </ElementType>
     );
   }
 

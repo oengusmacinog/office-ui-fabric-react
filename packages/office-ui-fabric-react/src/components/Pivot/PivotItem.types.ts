@@ -1,11 +1,24 @@
 import * as React from 'react';
-import { IRenderFunction } from '../../Utilities';
+import {
+  IRenderFunction,
+  IComponentAs
+} from '../../Utilities';
 
 export interface IPivotItemProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Gets the component ref.
    */
   componentRef?: () => void;
+
+  /**
+   * Render component as another component or HTML element
+   */
+  as?: string | IComponentAs<IPivotItemProps>;
+
+  /**
+   * Render component element with these attributes
+   */
+  with?: object;
 
   /**
    * The text displayed of each pivot link.

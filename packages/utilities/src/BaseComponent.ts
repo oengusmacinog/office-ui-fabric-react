@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Async } from './Async';
 import { EventGroup } from './EventGroup';
 import { IDisposable } from './IDisposable';
+import { IComponentAs } from './IComponentAs';
 import { warnDeprecations, warnMutuallyExclusive, warnConditionallyRequiredProps, ISettingsMap } from './warn';
 
 /**
@@ -12,6 +13,8 @@ import { warnDeprecations, warnMutuallyExclusive, warnConditionallyRequiredProps
 // tslint:disable-next-line:no-any
 export interface IBaseProps<T = any> {
   componentRef?: (ref: T | null) => (void | T);
+  as?: string | IComponentAs<IBaseProps>;
+  with?: object;
 }
 
 /**
