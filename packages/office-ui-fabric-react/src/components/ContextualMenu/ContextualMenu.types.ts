@@ -482,6 +482,18 @@ export interface IContextualMenuSection extends React.Props<any> {
   bottomDivider?: boolean;
 }
 
+export interface IContextualMenuStyleProps {
+  /**
+   * Accept theme prop.
+   */
+  theme: ITheme;
+
+  /**
+   * Optional override class name
+   */
+  className?: string;
+}
+
 export interface IMenuItemStyles extends IButtonStyles {
   /**
    * Styles for a menu item that is an anchor link.

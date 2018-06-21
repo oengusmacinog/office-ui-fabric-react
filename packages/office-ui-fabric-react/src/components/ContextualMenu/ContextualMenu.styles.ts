@@ -3,11 +3,12 @@ import {
   FontSizes,
   FontWeights,
   getFocusStyle,
+  getGlobalClassNames,
   HighContrastSelector,
   IRawStyle,
   ITheme
 } from '../../Styling';
-import { IContextualMenuStyles, IMenuItemStyles } from './ContextualMenu.types';
+import { IContextualMenuStyleProps, IContextualMenuStyles, IMenuItemStyles } from './ContextualMenu.types';
 import { memoizeFunction } from '../../Utilities';
 
 const ContextualMenuItemHeight = '32px';
@@ -196,50 +197,58 @@ export const getMenuItemStyles = memoizeFunction(
   }
 );
 
-export const getStyles = memoizeFunction(
-  (theme: ITheme): IContextualMenuStyles => {
-    const { semanticColors, fonts } = theme;
+const GlobalClassNames = {
+  root: 'ms-ContextualMenu'
+};
 
-    const ContextualMenuBackground = semanticColors.bodyBackground;
-    const ContextualMenuHeaderColor = semanticColors.menuHeader;
+export const getStyles = (props: IContextualMenuStyleProps): IContextualMenuStyles => {
+  const { className, theme } = props;
 
-    const styles: IContextualMenuStyles = {
-      root: {
+  const classNames = getGlobalClassNames(GlobalClassNames, theme);
+  const { semanticColors, fonts } = theme;
+
+  const ContextualMenuBackground = semanticColors.bodyBackground;
+  const ContextualMenuHeaderColor = semanticColors.menuHeader;
+
+  return {
+    root: [
+      classNames.root,
+      className,
+      {
         backgroundColor: ContextualMenuBackground,
         minWidth: '180px'
-      },
-      container: {},
-      list: {
-        listStyleType: 'none',
-        margin: '0',
-        padding: '0',
-        lineHeight: '0'
-      },
-      title: {
-        fontSize: '16px',
-        paddingRight: '14px',
-        paddingLeft: '14px',
-        paddingBottom: '5px',
-        paddingTop: '5px',
-        backgroundColor: theme.palette.neutralLight
-      },
-      header: [
-        fonts.small,
-        {
-          fontWeight: FontWeights.semibold,
-          color: ContextualMenuHeaderColor,
-          background: 'none',
-          backgroundColor: 'transparent',
-          border: 'none',
-          height: ContextualMenuItemHeight,
-          lineHeight: ContextualMenuItemHeight,
-          cursor: 'default',
-          padding: '0px 6px',
-          userSelect: 'none',
-          textAlign: 'left'
-        }
-      ]
-    };
-    return concatStyleSets(styles);
-  }
-);
+      }
+    ],
+    container: {},
+    list: {
+      listStyleType: 'none',
+      margin: '0',
+      padding: '0',
+      lineHeight: '0'
+    },
+    title: {
+      fontSize: '16px',
+      paddingRight: '14px',
+      paddingLeft: '14px',
+      paddingBottom: '5px',
+      paddingTop: '5px',
+      backgroundColor: theme.palette.neutralLight
+    },
+    header: [
+      fonts.small,
+      {
+        fontWeight: FontWeights.semibold,
+        color: ContextualMenuHeaderColor,
+        background: 'none',
+        backgroundColor: 'transparent',
+        border: 'none',
+        height: ContextualMenuItemHeight,
+        lineHeight: ContextualMenuItemHeight,
+        cursor: 'default',
+        padding: '0px 6px',
+        userSelect: 'none',
+        textAlign: 'left'
+      }
+    ]
+  };
+};
