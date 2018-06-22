@@ -4,10 +4,8 @@ import { IFocusZoneProps } from '../../FocusZone';
 import { IIconProps } from '../Icon/Icon.types';
 import { ICalloutProps } from '../../Callout';
 import { ITheme, IStyle } from '../../Styling';
-import { IButtonStyles } from '../../Button';
 import { IPoint, IRectangle, IRenderFunction } from '../../Utilities';
 import { IWithResponsiveModeState } from '../../utilities/decorators/withResponsiveMode';
-import { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames';
 export { DirectionalHint } from '../../common/DirectionalHint';
 import { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types';
 import { IContextualMenuItemProps, IContextualMenuRenderItem } from './ContextualMenuItem.types';
@@ -199,13 +197,6 @@ export interface IContextualMenuProps extends React.Props<any>, IWithResponsiveM
    */
   theme?: ITheme;
 
-  /**
-   * Method to provide the classnames to style the contextual menu. Default value is the getMenuClassnames func
-   * defined in ContextualMenu.classnames.
-   * @default getContextualMenuClassNames
-   */
-  getMenuClassNames?: (theme: ITheme, className?: string) => IContextualMenuClassNames;
-
   /** Method to call when trying to render a submenu. */
   onRenderSubMenu?: IRenderFunction<IContextualMenuProps>;
 
@@ -351,25 +342,6 @@ export interface IContextualMenuItem {
   subMenuProps?: IContextualMenuProps;
 
   /**
-   * Method to provide the classnames to style the individual items inside a menu. Default value is the getItemClassnames func
-   * defined in ContextualMenu.classnames.
-   * @default getItemClassNames
-   */
-  getItemClassNames?: (
-    theme: ITheme,
-    disabled: boolean,
-    expanded: boolean,
-    checked: boolean,
-    isAnchorLink: boolean,
-    knownIcon: boolean,
-    itemClassName?: string,
-    dividerClassName?: string,
-    iconClassName?: string,
-    subMenuClassName?: string,
-    primaryDisabled?: boolean
-  ) => IMenuItemClassNames;
-
-  /**
    * Method to provide the classnames to style the Vertical Divider of a split button inside a menu. Default value is the getVerticalDividerClassnames func defined in ContextualMenu.classnames
    * @default getSplitButtonVerticalDividerClassNames
    */
@@ -494,42 +466,42 @@ export interface IContextualMenuStyleProps {
   className?: string;
 }
 
-export interface IMenuItemStyles extends IButtonStyles {
-  /**
-   * Styles for a menu item that is an anchor link.
-   */
-  item: IStyle;
+// export interface IMenuItemStyles extends IButtonStyles {
+//   /**
+//    * Styles for a menu item that is an anchor link.
+//    */
+//   item: IStyle;
 
-  /**
-   * Styles for the content inside the button/link of the menuItem.
-   */
-  linkContent: IStyle;
+//   /**
+//    * Styles for the content inside the button/link of the menuItem.
+//    */
+//   linkContent: IStyle;
 
-  /**
-   * Styles for a menu item that is an anchor link.
-   */
-  anchorLink: IStyle;
+//   /**
+//    * Styles for a menu item that is an anchor link.
+//    */
+//   anchorLink: IStyle;
 
-  /**
-   * Default icon color style for known icons.
-   */
-  iconColor: IStyle;
+//   /**
+//    * Default icon color style for known icons.
+//    */
+//   iconColor: IStyle;
 
-  /**
-   * Default style for checkmark icons.
-   */
-  checkmarkIcon: IStyle;
+//   /**
+//    * Default style for checkmark icons.
+//    */
+//   checkmarkIcon: IStyle;
 
-  /**
-   * Styles for the submenu icon of a menu item.
-   */
-  subMenuIcon: IStyle;
+//   /**
+//    * Styles for the submenu icon of a menu item.
+//    */
+//   subMenuIcon: IStyle;
 
-  /**
-   * Styles for a divider item of a ConextualMenu.
-   */
-  divider: IStyle;
-}
+//   /**
+//    * Styles for a divider item of a ConextualMenu.
+//    */
+//   divider: IStyle;
+// }
 
 export interface IContextualMenuStyles {
   /**

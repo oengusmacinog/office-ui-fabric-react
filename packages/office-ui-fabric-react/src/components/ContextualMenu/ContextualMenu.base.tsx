@@ -1,15 +1,23 @@
 import * as React from 'react';
-import { IContextualMenuProps, IContextualMenuItem, ContextualMenuItemType } from './ContextualMenu.types';
+import {
+  IContextualMenuProps,
+  IContextualMenuItem,
+  ContextualMenuItemType,
+  IContextualMenuStyleProps,
+  IContextualMenuStyles
+} from './ContextualMenu.types';
 import { DirectionalHint } from '../../common/DirectionalHint';
 import { FocusZone, FocusZoneDirection, IFocusZoneProps, FocusZoneTabbableElements } from '../../FocusZone';
-import {
-  IMenuItemClassNames,
-  IContextualMenuClassNames,
-  getContextualMenuClassNames,
-  getItemClassNames
-} from './ContextualMenu.classNames';
+import { ContextualMenu } from './ContextualMenu';
+// import {
+//   IMenuItemClassNames,
+//   IContextualMenuClassNames,
+//   getContextualMenuClassNames,
+//   getItemClassNames
+// } from './ContextualMenu.classNames';
 import {
   BaseComponent,
+  classNamesFunction,
   IPoint,
   assign,
   getId,
@@ -32,6 +40,8 @@ import {
   ContextualMenuButton,
   ContextualMenuAnchor
 } from './ContextualMenuItemWrapper/index';
+
+const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>();
 
 export interface IContextualMenuState {
   expandedMenuItemKey?: string;
@@ -70,7 +80,6 @@ export function canAnyMenuItemsCheck(items: IContextualMenuItem[]): boolean {
 
 const NavigationIdleDelay = 250 /* ms */;
 
-@customizable('ContextualMenu', ['theme', 'styles'])
 @withResponsiveMode
 export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, IContextualMenuState> {
   // The default ContextualMenu properties have no items and beak, the default submenu direction is right and top.
@@ -79,8 +88,7 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
     shouldFocusOnMount: true,
     gapSpace: 0,
     directionalHint: DirectionalHint.bottomAutoEdge,
-    beakWidth: 16,
-    getMenuClassNames: getContextualMenuClassNames
+    beakWidth: 16
   };
 
   private _host: HTMLElement;
@@ -89,7 +97,6 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
   private _enterTimerId: number | undefined;
   private _targetWindow: Window;
   private _target: Element | MouseEvent | IPoint | null;
-  private _classNames: IContextualMenuClassNames;
   private _isScrollIdle: boolean;
   private _scrollIdleTimeoutId: number | undefined;
   private _processingExpandCollapseKeyOnly: boolean;
@@ -195,14 +202,17 @@ export class ContextualMenuBase extends BaseComponent<IContextualMenuProps, ICon
       shouldFocusOnMount,
       shouldFocusOnContainer,
       title,
+      styles,
       theme,
       calloutProps,
       onRenderSubMenu = this._onRenderSubMenu,
       focusZoneProps
     } = this.props;
 
-    const menuClassNames = this.props.getMenuClassNames || getContextualMenuClassNames;
-    this._classNames = menuClassNames(theme!, className);
+    const classNames = getClassNames(styles!, {
+      theme: theme!,
+      className
+    });
 
     const hasIcons = itemsHaveIcons(items);
 

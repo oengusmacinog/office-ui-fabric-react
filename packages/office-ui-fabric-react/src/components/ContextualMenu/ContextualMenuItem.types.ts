@@ -1,5 +1,8 @@
+import { ContextualMenuItemBase } from './ContextualMenuItem.base';
 import { IContextualMenuItem } from './ContextualMenu.types';
 import { IMenuItemClassNames } from './ContextualMenu.classNames';
+import { IStyle, ITheme } from '../../Styling';
+import { IStyleFunctionOrObject } from '../../Utilities';
 
 export interface IContextualMenuRenderItem {
   /**
@@ -18,7 +21,7 @@ export interface IContextualMenuRenderItem {
   dismissMenu: (dismissAll?: boolean) => void;
 }
 
-export interface IContextualMenuItemProps extends React.HTMLAttributes<IContextualMenuItemProps> {
+export interface IContextualMenuItemProps extends React.Props<ContextualMenuItemBase> {
   /**
    * Optional callback to access the IContextualMenuRenderItem interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
@@ -26,12 +29,29 @@ export interface IContextualMenuItemProps extends React.HTMLAttributes<IContextu
   componentRef?: (component: IContextualMenuRenderItem | null) => void;
 
   /**
+   * Call to provide customized styling that will layer on top of the variant rules
+   */
+  styles?: IStyleFunctionOrObject<IContextualMenuItemStyleProps, IContextualMenuItemStyles>;
+
+  /**
+   * Theme provided by HOC.
+   */
+  theme?: ITheme;
+
+  /**
    * The item to display
    */
   item: IContextualMenuItem;
 
   /**
+   * Additional css class to apply to the Component
+   * @defaultvalue undefined
+   */
+  className?: IStyle /**    * Styles for a divider item of a ConextualMenu.    */;
+
+  /**
    * Classnames for different aspects of a menu item
+   * @deprecated
    */
   classNames: IMenuItemClassNames;
 
@@ -71,4 +91,102 @@ export interface IContextualMenuItemProps extends React.HTMLAttributes<IContextu
    * Used for openSubMenu.
    */
   getSubmenuTarget?: () => HTMLElement | undefined;
+}
+
+export interface IContextualMenuItemStyleProps {
+  /**
+   * Accept theme prop.
+   */
+  theme: ITheme;
+
+  /**
+   * Accept custom classNames
+   */
+  className?: string;
+  disabled: boolean;
+  expanded: boolean;
+  checked: boolean;
+  isAnchorLink: boolean;
+  knownIcon: boolean;
+  itemClassName?: string;
+  dividerClassName?: string;
+  iconClassName?: string;
+  subMenuClassName?: string;
+  primaryDisabled?: boolean;
+}
+
+export interface IContextualMenuItemStyles {
+  /**
+   * Style set for the root div element.
+   */
+  root: IStyle;
+  /**
+   * Styles for a menu item that is an anchor link.
+   */
+  item: IStyle;
+
+  /**
+   * Styles for the content inside the button/link of the menuItem.
+   */
+  linkContent: IStyle;
+
+  /**
+   * Styles for a menu item that is an anchor link.
+   */
+  // anchorLink: IStyle;
+
+  /**
+   * Default icon color style for known icons.
+   */
+  // iconColor: IStyle;
+
+  /**
+   * Default style for checkmark icons.
+   */
+  checkmarkIcon: IStyle;
+
+  /**
+   * Styles for the submenu icon of a menu item.
+   */
+  subMenuIcon: IStyle;
+
+  /**
+   * Styles for a divider item of a ConextualMenu.
+   */
+  divider: IStyle;
+
+  /**
+   * Styles for a icon of a ConextualMenuItem.
+   */
+  icon: IStyle;
+
+  /**
+   * Styles for a label of a ConextualMenuItem.
+   */
+  label: IStyle;
+
+  /**
+   * Styles for secondary text of a ConextualMenuItem.
+   */
+  secondaryText: IStyle;
+
+  /**
+   * Styles for the split container of a ConextualMenuItem.
+   */
+  splitContainer: IStyle;
+
+  /**
+   * Styles for a split primary button of a ConextualMenuItem.
+   */
+  splitPrimary: IStyle;
+
+  /**
+   * Styles for a split menu of a ConextualMenuItem.
+   */
+  splitMenu: IStyle;
+
+  /**
+   * Styles for a link context menu of a ConextualMenuItem.
+   */
+  linkContentMenu: IStyle;
 }
