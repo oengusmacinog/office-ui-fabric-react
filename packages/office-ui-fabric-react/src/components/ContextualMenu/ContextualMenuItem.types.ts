@@ -1,6 +1,6 @@
 import { ContextualMenuItemBase } from './ContextualMenuItem.base';
 import { IContextualMenuItem } from './ContextualMenu.types';
-import { IMenuItemClassNames } from './ContextualMenu.classNames';
+// import { IMenuItemClassNames } from './ContextualMenu.classNames';
 import { IStyle, ITheme } from '../../Styling';
 import { IStyleFunctionOrObject } from '../../Utilities';
 
@@ -53,7 +53,8 @@ export interface IContextualMenuItemProps extends React.Props<ContextualMenuItem
    * Classnames for different aspects of a menu item
    * @deprecated
    */
-  classNames: IMenuItemClassNames;
+  // classNames: IMenuItemClassNames;
+  classNames: string;
 
   /**
    * Index of the item
