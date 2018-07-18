@@ -4,6 +4,7 @@ import {
   IChoiceGroupOptionStyleProps,
   IChoiceGroupOptionStyles
 } from 'office-ui-fabric-react/lib/components/ChoiceGroup/ChoiceGroupOption';
+import { ICalloutContentStyleProps } from 'office-ui-fabric-react/lib/components/Callout/Callout.types';
 import { FontSizes } from './FluentType';
 import { Depths } from './FluentDepths';
 
@@ -90,20 +91,45 @@ const ChoiceGroupOptionStyles = (props: IChoiceGroupOptionStyleProps): IChoiceGr
   };
 };
 
-const CalloutContentStyles = {
-  root: {
-    // borderRadius: fluentBorderRadius, // waiting on child override ability before commenting this in
-    boxShadow: Depths.depth64
-  }
-};
+// const CalloutContentStyles = {
+//   root: {
+//     // borderRadius: fluentBorderRadius, // waiting on child override ability before commenting this in
+//     boxShadow: Depths.depth64
+//   }
+// };
 
 const ComboBoxStyles = {
   root: {
     borderRadius: fluentBorderRadius // the bound input box
   },
   callout: {
-    backgroundColor: 'blue',
-    borderRadius: '0 0 20px 20px' // Still requires to target calloutMain as well as it overlaps this element
+    // Still requires to target calloutMain as well as it overlaps this element
+    borderRadius: `0 0 ${fluentBorderRadius} ${fluentBorderRadius}`,
+    overflow: 'hidden'
+  }
+  // subComponentStyles: {
+  //   calloutContent: (props: ICalloutContentStyleProps) => ({
+  //     root: {
+  //       // borderRadius: fluentBorderRadius, // waiting on child override ability before commenting this in
+  //       borderRadius: '0 0 20px 20px',
+  //       boxShadow: Depths.depth64
+  //     }
+  //   })
+  // }
+};
+
+const ContextualMenuStyles = {
+  // root: {
+  //   borderRadius: '0 0 20px 20px'
+  // },
+  subComponentStyles: {
+    calloutContent: (props: ICalloutContentStyleProps) => ({
+      root: {
+        // borderRadius: fluentBorderRadius, // waiting on child override ability before commenting this in
+        borderRadius: '0 0 20px 20px'
+        // boxShadow: Depths.depth64
+      }
+    })
   }
 };
 
@@ -169,9 +195,9 @@ export const FluentStyles = {
   DefaultButton: {
     styles: DefaultButtonStyles
   },
-  CalloutContent: {
-    styles: CalloutContentStyles
-  },
+  // CalloutContent: {
+  //   styles: CalloutContentStyles
+  // },
   CompoundButton: {
     styles: CompoundButtonStyles
   },
@@ -183,6 +209,9 @@ export const FluentStyles = {
   },
   ComboBox: {
     styles: ComboBoxStyles
+  },
+  ContextualMenu: {
+    styles: ContextualMenuStyles
   },
   Dialog: {
     styles: DialogStyles
