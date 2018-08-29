@@ -2,18 +2,17 @@ import * as React from 'react';
 import { IRefObject, IRenderFunction, IStyleFunctionOrObject } from '../../Utilities';
 import { CollapseAllVisibility } from '../../GroupedList';
 import { ITooltipHostProps } from '../../Tooltip';
-import { IViewport } from '../../utilities/decorators/withViewport';
-import { ISelection, SelectionMode } from '../../utilities/selection/interfaces';
 import { ITheme, IStyle } from '../../Styling';
 import { DetailsHeaderBase } from './DetailsHeader.base';
-import { IColumn, DetailsListLayoutMode, IColumnReorderOptions } from './DetailsList.types';
+import { IColumn, DetailsListLayoutMode, IColumnReorderOptions, ColumnDragEndLocation } from './DetailsList.types';
+import { ICellStyleProps, IDetailsItemProps } from './DetailsRow.types';
 
 export interface IDetailsHeader {
   /** sets focus into the header */
   focus: () => boolean;
 }
 
-export interface IDetailsHeaderProps extends React.Props<DetailsHeaderBase> {
+export interface IDetailsHeaderProps extends React.Props<DetailsHeaderBase>, IDetailsItemProps {
   /** Theme from the Higher Order Component */
   theme?: ITheme;
 
@@ -22,15 +21,6 @@ export interface IDetailsHeaderProps extends React.Props<DetailsHeaderBase> {
 
   /** Ref to the component itself */
   componentRef?: IRefObject<IDetailsHeader>;
-
-  /** Column definitions */
-  columns: IColumn[];
-
-  /** Selection utility */
-  selection: ISelection;
-
-  /** Selection mode used for this component */
-  selectionMode: SelectionMode;
 
   /** Layout mode - fixedColumns or justified */
   layoutMode: DetailsListLayoutMode;
@@ -53,12 +43,6 @@ export interface IDetailsHeaderProps extends React.Props<DetailsHeaderBase> {
   /** Callback to render a tooltip for the column header */
   onRenderColumnHeaderTooltip?: IRenderFunction<ITooltipHostProps>;
 
-  /** Group nesting depth */
-  groupNestingDepth?: number;
-
-  /** Indent width */
-  indentWidth?: number;
-
   /** Whether to collapse for all visibility */
   collapseAllVisibility?: CollapseAllVisibility;
 
@@ -80,11 +64,11 @@ export interface IDetailsHeaderProps extends React.Props<DetailsHeaderBase> {
   /** Select all button visibility */
   selectAllVisibility?: SelectAllVisibility;
 
-  /** Viewport of the virtualized DetailsList */
-  viewport?: IViewport;
+  /** Column reordering options */
+  columnReorderOptions?: IColumnReorderOptions;
 
   /** Column reordering options */
-  columnReorderOptions?: IColumnReorderOptions | null;
+  columnReorderProps?: IColumnReorderHeaderProps;
 
   /** Minimum pixels to be moved before dragging is registered */
   minimumPixelsForDrag?: number;
@@ -113,6 +97,14 @@ export interface IColumnResizeDetails {
   columnMinWidth: number;
 }
 
+export interface IColumnReorderHeaderProps extends IColumnReorderOptions {
+  /** Callback to notify the column dragEnd event to List
+   * Need this to check whether the dragEnd has happened on
+   * corresponding list or outside of the list
+   */
+  onColumnDragEnd?: (props: { dropLocation?: ColumnDragEndLocation }, event: MouseEvent) => void;
+}
+
 export interface IDropHintDetails {
   originX: number; // X index of dropHint Element relative to header
   startX: number; // start index of the range for the current drophint
@@ -139,6 +131,8 @@ export type IDetailsHeaderStyleProps = Required<Pick<IDetailsHeaderProps, 'theme
 
     /** Whether checkbox is hidden  */
     isCheckboxHidden?: boolean;
+
+    cellStyleProps?: ICellStyleProps;
   };
 
 export interface IDetailsHeaderStyles {
@@ -148,26 +142,17 @@ export interface IDetailsHeaderStyles {
   cellIsCheck: IStyle;
   cellIsActionable: IStyle;
   cellIsEmpty: IStyle;
-  cell: IStyle;
-  gripperBarVerticalStyle: IStyle;
   cellSizer: IStyle;
   cellSizerStart: IStyle;
   cellSizerEnd: IStyle;
   cellIsResizing: IStyle;
+  cellIsGroupExpander: IStyle;
   collapseButton: IStyle;
-  iconOnlyHeader: IStyle;
-  nearIcon: IStyle;
-  sortIcon: IStyle;
-  filterChevron: IStyle;
-  cellTitle: IStyle;
-  cellName: IStyle;
   checkTooltip: IStyle;
-  cellTooltip: IStyle;
   sizingOverlay: IStyle;
-  borderWhileDragging: IStyle;
   dropHintCircleStyle: IStyle;
+  dropHintCaretStyle: IStyle;
   dropHintLineStyle: IStyle;
   dropHintStyle: IStyle;
-  borderAfterDropping: IStyle;
   accessibleLabel: IStyle;
 }

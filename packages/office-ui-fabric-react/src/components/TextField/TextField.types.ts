@@ -159,7 +159,12 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
   errorMessage?: string;
 
   /**
-   * Callback for the onChanged event.
+   * Callback for when the input value changes.
+   */
+  onChange?: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
+
+  /**
+   * @deprecated Use onChange instead.
    */
   onChanged?: (newValue: any) => void;
 
@@ -285,7 +290,15 @@ export interface ITextFieldProps extends React.AllHTMLAttributes<HTMLInputElemen
 export type ITextFieldStyleProps = Required<Pick<ITextFieldProps, 'theme'>> &
   Pick<
     ITextFieldProps,
-    'className' | 'disabled' | 'required' | 'multiline' | 'borderless' | 'resizable' | 'underlined' | 'iconClass'
+    | 'className'
+    | 'disabled'
+    | 'inputClassName'
+    | 'required'
+    | 'multiline'
+    | 'borderless'
+    | 'resizable'
+    | 'underlined'
+    | 'iconClass'
   > & {
     /** Element has an error message. */
     hasErrorMessage?: boolean;

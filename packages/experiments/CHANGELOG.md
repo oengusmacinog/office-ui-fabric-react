@@ -1,6 +1,100 @@
 # Change Log - @uifabric/experiments
 
-This log was last generated on Mon, 30 Jul 2018 10:27:11 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Aug 2018 20:36:27 GMT and should not be manually modified.
+
+## 6.24.3
+Tue, 21 Aug 2018 20:36:27 GMT
+
+### Patches
+
+- Adding required validator support for the FormDropdown in multi-select mode.
+
+## 6.24.2
+Tue, 21 Aug 2018 10:28:16 GMT
+
+### Patches
+
+- Experiments: fix TextPage require path after a file extension change.
+
+## 6.24.1
+Mon, 20 Aug 2018 10:26:10 GMT
+
+*Version update only*
+
+## 6.24.0
+Thu, 16 Aug 2018 10:26:16 GMT
+
+### Minor changes
+
+- Adding support for drop-downs with multiple selection to the FormDropdown component.
+
+## 6.23.3
+Tue, 14 Aug 2018 10:27:33 GMT
+
+### Patches
+
+- disabling codepen task
+
+## 6.23.2
+Tue, 14 Aug 2018 00:01:11 GMT
+
+*Version update only*
+
+## 6.23.1
+Mon, 13 Aug 2018 03:43:25 GMT
+
+### Patches
+
+- Remove utilities index file.
+
+## 6.23.0
+Fri, 10 Aug 2018 10:26:08 GMT
+
+### Minor changes
+
+- Stack: render vertically by default, add horizontalAlignment, verticalAlignment, fillHorizontal, fillVertical properties
+- Updating `Text` component with fixes to make it usable.
+
+### Patches
+
+- Inject customizations into Foundation. Add contextual theming and styling examples.
+
+## 6.22.6
+Wed, 08 Aug 2018 10:25:07 GMT
+
+### Patches
+
+- Fix bad imports that break AMD.
+- Implement base state class and controlled vs. uncontrolled behavior.
+- Stack: merge the className of a StackItem with the className of its first child
+
+## 6.22.5
+Mon, 06 Aug 2018 10:27:53 GMT
+
+### Patches
+
+- Fixing Stack to allow for classNames through Stack.Item
+
+## 6.22.4
+Fri, 03 Aug 2018 10:25:59 GMT
+
+### Patches
+
+- Added export to index
+
+## 6.22.3
+Thu, 02 Aug 2018 10:23:19 GMT
+
+### Patches
+
+- Updated border color on rest state of button, added borders to other states and reverted change to radio button selection dot.
+
+## 6.22.2
+Wed, 01 Aug 2018 10:25:51 GMT
+
+### Patches
+
+- Improvements to CollapsibleSection and new examples.
 
 ## 6.22.1
 Mon, 30 Jul 2018 10:27:11 GMT

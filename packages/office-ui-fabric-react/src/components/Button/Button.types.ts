@@ -86,6 +86,12 @@ export interface IButtonProps
   checked?: boolean;
 
   /**
+   * Whether button is a toggle button with distinct on and off states. This should be true for buttons that permanently
+   * change state when a press event finishes, such as a volume mute button.
+   */
+  toggle?: boolean;
+
+  /**
    * If provided, additional class name to provide on the root element.
    */
   className?: string;
@@ -401,6 +407,11 @@ export interface IButtonStyles {
    * Style for the text content of the button.
    */
   label?: IStyle;
+
+  /**
+   * Style override for the text content when the button is hovered.
+   */
+  labelHovered?: IStyle;
 
   /**
    * Style override for the text content when the button is disabled.

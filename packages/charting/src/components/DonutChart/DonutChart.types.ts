@@ -1,19 +1,8 @@
 import { ITheme, IStyle } from 'office-ui-fabric-react/lib/Styling';
 import { IStyleFunctionOrObject } from 'office-ui-fabric-react/lib/Utilities';
-
+import { IDataPoint } from '../../types/IDataPoint';
+export { IDataPoint } from '../../types/IDataPoint';
 export interface IDonutChart {}
-
-export interface IDataPoint {
-  /**
-   * Independent value of the data point, rendered.
-   */
-  value: number;
-
-  /**
-   * Dependent value of the data point, rendered.
-   */
-  label: number | string;
-}
 
 export interface IDonutChartProps {
   /**
@@ -55,18 +44,10 @@ export interface IDonutChartProps {
    * Width of line stroke
    */
   strokeWidth?: number;
-  /**
-   * legend X position
-   */
-  legendX?: number;
-  /**
-   * Legend Y position
-   */
-  legendY?: number;
 }
 
 export type IDonutChartStyleProps = Required<Pick<IDonutChartProps, 'theme' | 'width' | 'height'>> &
-  Pick<IDonutChartProps, 'className' | 'legendX' | 'legendY'>;
+  Pick<IDonutChartProps, 'className'>;
 
 export interface IDonutChartStyles {
   /**
@@ -83,4 +64,14 @@ export interface IDonutChartStyles {
    * Style set for the Pie component Legend
    */
   legend: IStyle;
+
+  /**
+   * Style set for each legend item
+   */
+  legendItem: IStyle;
+
+  /**
+   * Style set for the colored box in each legend item
+   */
+  legendBox: IStyle;
 }

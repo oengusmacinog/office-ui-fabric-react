@@ -17,6 +17,7 @@ import { IGridListProps } from '../GridList/GridList.types';
 import { GridList } from '../GridList/GridList';
 import { IChartProps, ChartWidth, ChartHeight } from '../Chart/Chart.types';
 import { Chart } from '../Chart/Chart';
+import { MultiCount, IMultiCountProps } from '@uifabric/dashboard';
 
 export class Layout extends React.Component<ILayoutProps> {
   constructor(props: ILayoutProps) {
@@ -26,11 +27,12 @@ export class Layout extends React.Component<ILayoutProps> {
   public render(): JSX.Element {
     const getClassNames = classNamesFunction<ILayoutProps, ILayoutStyles>();
     const { header, contentArea, actions, cardSize } = this.props;
-    const classNames = getClassNames(getStyles, { cardSize });
+    const classNames = getClassNames(getStyles, { cardSize, header });
     const content: JSX.Element | null = this._generateContentArea(
       contentArea!,
       classNames.contentLayout,
       classNames.contentArea1,
+      classNames.dataVizLastUpdatedOn,
       classNames.contentArea2,
       cardSize
     );
@@ -49,7 +51,10 @@ export class Layout extends React.Component<ILayoutProps> {
     e.stopPropagation();
   };
 
-  private _generateContentElement(cardContentList: ICardContentDetails[]): JSX.Element[] {
+  private _generateContentElement(
+    cardContentList: ICardContentDetails[],
+    dataVizLastUpdateClassName: string
+  ): JSX.Element[] {
     const contentArea: JSX.Element[] = [];
     // This works because we have priority is defined in enum as numbers if it is string this will not work
     for (const priority in Priority) {
@@ -94,18 +99,39 @@ export class Layout extends React.Component<ILayoutProps> {
                 break;
               }
               case CardContentType.Chart: {
-                const { chartLabel, colors, barWidth, data, chartType } = cardContent.content as IChartProps;
+                const {
+                  chartLabels,
+                  legendColors,
+                  barWidth,
+                  barHeight,
+                  data,
+                  chartType,
+                  dataPoints,
+                  compactChartWidth,
+                  chartUpdatedOn
+                } = cardContent.content as IChartProps;
                 contentArea.push(
-                  <Chart
-                    chartLabel={chartLabel}
-                    chartType={chartType}
-                    colors={colors}
-                    barWidth={barWidth}
-                    data={data}
-                    width={this._getChartWidth(cardContentList.length)}
-                    height={this._getChartHeight(cardContentList.length)}
-                  />
+                  <React.Fragment>
+                    {chartUpdatedOn && <div className={dataVizLastUpdateClassName}>{chartUpdatedOn}</div>}
+                    <Chart
+                      chartLabels={chartLabels}
+                      chartType={chartType}
+                      legendColors={legendColors}
+                      barWidth={barWidth}
+                      barHeight={barHeight}
+                      data={data}
+                      dataPoints={dataPoints}
+                      compactChartWidth={compactChartWidth}
+                      width={this._getChartWidth(cardContentList.length)}
+                      height={this._getChartHeight(cardContentList.length)}
+                    />
+                  </React.Fragment>
                 );
+                break;
+              }
+              case CardContentType.MultiCount: {
+                const { multiCountRows } = cardContent.content as IMultiCountProps;
+                contentArea.push(<MultiCount multiCountRows={multiCountRows} />);
                 break;
               }
             }
@@ -155,6 +181,7 @@ export class Layout extends React.Component<ILayoutProps> {
     cardContentList: ICardContentDetails[],
     contentLayoutClassName: string,
     contentArea1ClassName: string,
+    dataVizLastUpdateClassName: string,
     contentArea2ClassName: string,
     cardSize: CardSize
   ): JSX.Element | null {
@@ -162,7 +189,7 @@ export class Layout extends React.Component<ILayoutProps> {
       return null;
     }
 
-    const contentAreaContents = this._generateContentElement(cardContentList);
+    const contentAreaContents = this._generateContentElement(cardContentList, dataVizLastUpdateClassName);
     if (contentAreaContents.length === 0) {
       return null;
     }

@@ -85,6 +85,7 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
         >
           <div
             aria-colindex={1}
+            aria-hidden={undefined}
             aria-labelledby="header0-check"
             className=
                 ms-DetailsHeader-cell
@@ -359,7 +360,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -462,7 +470,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -565,7 +580,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -668,7 +690,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -771,7 +800,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -874,7 +910,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -977,7 +1020,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -1080,7 +1130,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -1183,7 +1240,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=
@@ -1286,7 +1350,14 @@ exports[`ShimmeredDetailsList renders List correctly 1`] = `
                     role="presentation"
                   >
                     <div
-                      className=""
+                      className=
+
+                          {
+                            border-left: 40px solid #ffffff;
+                          }
+                          {
+                            border-bottom: 1px solid #ffffff;
+                          }
                     >
                       <div
                         className=

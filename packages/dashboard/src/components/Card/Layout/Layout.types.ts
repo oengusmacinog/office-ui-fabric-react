@@ -7,6 +7,7 @@ import { ICompoundButtonStackProps } from '../CompoundButtonStack/CompoundButton
 import { IAction } from '../ActionBar/ActionBar.types';
 import { IGridListProps } from '../GridList/GridList.types';
 import { IChartProps } from '../Chart/Chart.types';
+import { IMultiCountProps } from '@uifabric/dashboard';
 
 export interface ICardContentDetails {
   /**
@@ -23,7 +24,13 @@ export interface ICardContentDetails {
   /**
    * Content for component we want to render
    */
-  content: IBodyTextProps | IThumbnailListProps | ICompoundButtonStackProps | IGridListProps | IChartProps;
+  content:
+    | IBodyTextProps
+    | IThumbnailListProps
+    | ICompoundButtonStackProps
+    | IGridListProps
+    | IChartProps
+    | IMultiCountProps;
 }
 
 export interface ILayoutProps {
@@ -68,6 +75,11 @@ export interface ILayoutStyles {
    * Style set for card content1(Area1)
    */
   contentArea1: IStyle;
+
+  /**
+   * Style for dataviz last updated on
+   */
+  dataVizLastUpdatedOn: IStyle;
 
   /**
    * Style set for card content2(Area2)
